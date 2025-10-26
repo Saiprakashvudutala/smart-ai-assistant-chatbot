@@ -39,6 +39,7 @@ LangGraph | FastAPI | Streamlit | OpenAI | Groq | Meta Llama | Mistral
 
 The architecture below outlines the 3-phase structure of the system.  
 It demonstrates how each layer (Agent, Backend, Frontend) interacts for dynamic, low-latency AI responses.
-![Technical Architecture](technical_architecture.png)
+<img width="1024" height="1536" alt="technical_architecture" src="https://github.com/user-attachments/assets/bbb82119-7cd0-4088-9900-ec23e2209c76" />
+
 
 ---
