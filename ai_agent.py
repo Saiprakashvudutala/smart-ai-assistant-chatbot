@@ -5,12 +5,10 @@ from langchain_groq import ChatGroq
 from langgraph.prebuilt import create_react_agent
 from langchain_community.tools.tavily_search import TavilySearchResults
 
-# Load environment variables
 load_dotenv()
 
-print("✅ ai_agent.py executing")
+print("ai_agent.py executing")
 
-# Load API keys
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
@@ -20,17 +18,15 @@ print(f"GROQ_API_KEY loaded: {bool(GROQ_API_KEY)}")
 print(f"TAVILY_API_KEY loaded: {bool(TAVILY_API_KEY)}")
 
 
-# ---------------------- Core Function ---------------------- #
 def get_response_from_ai_agent(provider, model_name, query, system_prompt, allow_search=False):
     """
     Handles AI agent response logic for both OpenAI and Groq providers.
     Supports optional web search using Tavily.
     """
-    print("🚀 get_response_from_ai_agent called")
+    print("get_response_from_ai_agent called")
     print(f"Model: {model_name}, Provider: {provider}, WebSearch: {allow_search}")
 
     try:
-        # ✅ Select LLM provider
         if not provider or not model_name:
             raise ValueError("Provider or model_name is missing!")
 
@@ -47,15 +43,12 @@ def get_response_from_ai_agent(provider, model_name, query, system_prompt, allow
         else:
             raise ValueError(f"Unsupported provider: {provider}")
 
-        # ✅ Enable Tavily Search (optional)
         tools = [TavilySearchResults(max_results=2)] if allow_search else []
 
-        # ✅ Create the LangGraph Agent (new syntax)
         agent = create_react_agent(model=llm, tools=tools)
 
-        print("🧠 Invoking agent...")
+        print("Invoking agent...")
 
-        # ✅ Call the agent
         response = agent.invoke({
             "messages": [
                 ("system", system_prompt or "You are a helpful assistant."),
@@ -63,22 +56,19 @@ def get_response_from_ai_agent(provider, model_name, query, system_prompt, allow
             ]
         })
 
-        # ✅ Parse the final message safely
         if isinstance(response, dict):
             messages = response.get("messages", [])
             if messages and hasattr(messages[-1], "content"):
-                print("✅ Agent response received successfully!")
+                print("Agent response received successfully!")
                 return messages[-1].content
 
-        print("⚠️ No valid content in agent response:", response)
+        print("No valid content in agent response:", response)
         return "No valid response from the agent."
 
     except Exception as e:
-        print("❌ Agent Error:", str(e))
+        print("Agent Error:", str(e))
         return f"Agent Error: {str(e)}"
 
-
-# ---------------------- Test (Optional) ---------------------- #
 if __name__ == "__main__":
     result = get_response_from_ai_agent(
         provider="groq",
@@ -87,7 +77,7 @@ if __name__ == "__main__":
         system_prompt="You are a smart assistant that answers clearly and briefly.",
         allow_search=False
     )
-    print("\n🧩 Final Output:", result)
+    print("\n Final Output:", result)
 
 
 
