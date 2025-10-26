@@ -1,4 +1,4 @@
-print("✅ backend.py is executing")
+print("backend.py is executing")
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,10 +7,8 @@ from typing import List
 import uvicorn
 from ai_agent import get_response_from_ai_agent
 
-# ✅ Define FastAPI app
 app = FastAPI(title="LangGraph AI Agent API")
 
-# ✅ Define request model
 class RequestState(BaseModel):
     model_name: str
     model_provider: str
@@ -20,15 +18,15 @@ class RequestState(BaseModel):
 
 @app.get("/")
 def root():
-    print("✅ Root endpoint called")
-    return {"message": "✅ FastAPI backend is running!"}
+    print("Root endpoint called")
+    return {"message": "FastAPI backend is running!"}
 
 @app.post("/chat")
 @app.post("/chat")
 async def chat_endpoint(request: Request):
     try:
         data = await request.json()
-        print("📩 Incoming request data:", data)
+        print("Incoming request data:", data)
 
         response = get_response_from_ai_agent(
             model_name=data.get("model_name"),
@@ -38,18 +36,18 @@ async def chat_endpoint(request: Request):
             system_prompt=data.get("system_prompt")
         )
 
-        print("✅ Agent response generated successfully")
+        print("Agent response generated successfully")
         return {"response": response}
 
     except Exception as e:
         import traceback
         traceback.print_exc()
-        print("❌ Backend Error:", str(e))
+        print("Backend Error:", str(e))
         return {"error": str(e)}
 
 
 if __name__ == "__main__":
     import uvicorn
-    print("🚀 Starting backend on http://127.0.0.1:9999 ...")
+    print("Starting backend on http://127.0.0.1:9999 ...")
     uvicorn.run(app, host="127.0.0.1", port=9999, reload=False)
 
