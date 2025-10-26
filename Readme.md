@@ -1,5 +1,4 @@
 # Personal Agentic AI Chatbot  
-### GenAI Application (Production Ready)
 
 LangGraph | FastAPI | Streamlit | OpenAI | Groq | Meta Llama | Mistral
 
