@@ -1,0 +1,8 @@
+# ignore environment and credentials
+.env
+
+# python cache
+__pycache__/
+
+# local experiments
+trail.py
